@@ -1,25 +1,19 @@
 import React from 'react'
 import TransitionGroupPlus from 'react-transition-group-plus'
-import Link from './components/Link'
-import PropTypes from 'prop-types'
-import history from './history'
+import Link from './Link'
 
 export default class App extends React.Component {
-  static childContextTypes = {
-    saveScrollPosition: PropTypes.any,
-    updateCurrentComponentLocation: PropTypes.any,
-    onRenderComplete: PropTypes.any,
+  onResolve = () => {
+    this.props.router.onResolve()
   }
 
-  getChildContext() {
-    return this.props.context
-  }
-
-  componentDidMount() {
-    console.log('App mounted')
+  onBeforeDispose = () => {
+    this.props.router.onBeforeDispose()
   }
 
   render() {
+    const {children} = this.props
+
     return <div>
       <div>app</div>
       <ul>
@@ -35,9 +29,11 @@ export default class App extends React.Component {
       </ul>
 
       <TransitionGroupPlus component="div" transitionMode="out-in">
-        {this.props.children}
+        {children && React.cloneElement(children, {
+          onResolve: this.onResolve,
+          onBeforeDispose: this.onBeforeDispose,
+        })}
       </TransitionGroupPlus>
-
     </div>
   }
 }

@@ -1,5 +1,4 @@
-import createBrowserHistory from 'history/createBrowserHistory';
+import createBrowserHistory from 'history/createBrowserHistory'
 
-// Navigation manager, e.g. history.push('/home')
-// https://github.com/mjackson/history
-export default createBrowserHistory();
+const isBrowser = typeof window !== 'undefined'
+export default isBrowser && createBrowserHistory()

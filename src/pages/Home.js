@@ -1,66 +1,37 @@
 import React from 'react'
 import {findDOMNode} from 'react-dom'
-import PropTypes from 'prop-types'
+import pageBehavior from './pageBehavior'
 
-export default class HomePage extends React.Component {
-  static contextTypes = {
-    saveScrollPosition: PropTypes.any,
-    updateCurrentComponentLocation: PropTypes.any,
-    onRenderComplete: PropTypes.any,
-  }
-
-  state = {
-    isVisible: false,
-  }
-
-  async componentWillAppear(cb) {
-    await new Promise(resolve => this.setState({isVisible: true}, resolve))
-    this.context.onRenderComplete()
-    let anim = findDOMNode(this).animate({
-      opacity: [0, 1]
+class Home extends React.Component {
+  async animateAppear() {
+    const anim = findDOMNode(this).animate({
+      opacity: [0, 1],
     }, {
-      duration: 800,
+      duration: 1600,
     })
-    anim.onfinish = () => {
-      console.log('finish')
-      cb()
-    }
+    await new Promise(resolve => anim.onfinish = resolve)
   }
 
-  async componentWillEnter(cb) {
-    await new Promise(resolve => this.setState({isVisible: true}, resolve))
-    this.context.onRenderComplete()
-    let anim = findDOMNode(this).animate({
-      opacity: [0, 1]
+  async animateEnter() {
+    const anim = findDOMNode(this).animate({
+      opacity: [0, 1],
     }, {
-      duration: 800,
+      duration: 1600,
     })
-    anim.onfinish = () => {
-      console.log('finish')
-      cb()
-    }
-
+    await new Promise(resolve => anim.onfinish = resolve)
   }
 
-  componentWillLeave(cb) {
-    let anim = findDOMNode(this).animate({
-      opacity: [1, 0]
+  async animateLeave() {
+    const anim = findDOMNode(this).animate({
+      opacity: [1, 0],
     }, {
-      duration: 800,
+      duration: 1600,
     })
-    anim.onfinish = () => {
-      console.log('finish')
-      this.context.saveScrollPosition()
-      this.context.updateCurrentComponentLocation()
-      cb()
-    }
-  }
-
-  componentDidMount() {
+    await new Promise(resolve => anim.onfinish = resolve)
   }
 
   render() {
-    return <div style={this.state.isVisible ? {} : {display: 'none'}}>
+    return <div hidden={!this.props.isVisible}>
       <h1>Home</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At hic delectus corporis sequi, explicabo sunt neque iure nostrum earum, veritatis culpa tempora necessitatibus atque quam inventore sint provident iste? At.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At hic delectus corporis sequi, explicabo sunt neque iure nostrum earum, veritatis culpa tempora necessitatibus atque quam inventore sint provident iste? At.</p>
@@ -70,3 +41,5 @@ export default class HomePage extends React.Component {
     </div>
   }
 }
+
+export default pageBehavior(Home)

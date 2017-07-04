@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from '../components/Head'
 
 const getDisplayName = (WrappedComponent) =>
   WrappedComponent.displayName ||
@@ -42,10 +43,26 @@ const pageBehavior = (WrappedComponent) => {
       this.props.onBeforeDispose()
     }
 
+    renderHead = () => {
+      const {isSsr, title, description, canonical} = this.props
+      const {isVisible} = this.state
+
+      return <Head
+        isEnabled={isSsr || isVisible}
+        title={title}
+        description={description}
+        canonical={canonical}
+      />
+    }
+
     render() {
+      const {onResolve, onBeforeDispose, ...props} = this.props
+
       return <WrappedComponent
+        {...props}
         ref={c => this.wrappedComponent = c}
-        isVisible={this.state.isVisible} />
+        isVisible={this.state.isVisible}
+        renderHead={this.renderHead} />
     }
   }
 }

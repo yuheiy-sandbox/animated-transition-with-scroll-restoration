@@ -12,7 +12,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const {children} = this.props
+    const {children, isSsr} = this.props
 
     return <div>
       <div>app</div>
@@ -30,6 +30,7 @@ export default class App extends React.Component {
 
       <TransitionGroupPlus component="div" transitionMode="out-in">
         {children && React.cloneElement(children, {
+          isSsr,
           onResolve: this.onResolve,
           onBeforeDispose: this.onBeforeDispose,
         })}

@@ -31,7 +31,11 @@ class About extends React.Component {
   }
 
   render() {
-    return <div hidden={!this.props.isVisible}>
+    const {isVisible} = this.props
+
+    return <div hidden={!isVisible}>
+      {this.props.renderHead()}
+
       <h1>About</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At hic delectus corporis sequi, explicabo sunt neque iure nostrum earum, veritatis culpa tempora necessitatibus atque quam inventore sint provident iste? At.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At hic delectus corporis sequi, explicabo sunt neque iure nostrum earum, veritatis culpa tempora necessitatibus atque quam inventore sint provident iste? At.</p>

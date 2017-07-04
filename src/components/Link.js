@@ -8,6 +8,7 @@
  */
 
 import React from 'react';
+import jump from 'jump.js'
 import history from '../history';
 
 function isLeftClickEvent(event) {
@@ -39,7 +40,9 @@ class Link extends React.Component {
     event.preventDefault();
 
     if (this.props.to === history.location.pathname) {
-      window.scrollTo(0, 0)
+      jump(document.body, {
+        duration: 200,
+      })
     } else {
       history.push(this.props.to);
     }

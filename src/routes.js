@@ -8,24 +8,36 @@ const routes = [
     path: '/',
     action: ({path}) => {
       return {
-        title: 'home',
-        component: <Home key={path} />
+        component: <Home
+          key={path}
+          title="home"
+          description="this is home"
+          canonical={path}
+        />
       }
     }
   }, {
     path: '/about',
     action: ({path}) => {
       return {
-        title: 'about',
-        component: <About key={path} />
+        component: <About
+          key={path}
+          title="about"
+          description="this is about"
+          canonical={path}
+        />
       }
     }
   }, {
     path: '/contact',
     action: ({path}) => {
       return {
-        title: 'contact',
-        component: <Contact key={path} />
+        component: <Contact
+          key={path}
+          title="contact"
+          description="this is contact"
+          canonical={path}
+        />
       }
     }
   }
